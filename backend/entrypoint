@@ -1,0 +1,50 @@
+
+if [ "$1" == "makemigrations" ]
+then
+    shift
+    msg="$@"
+    exec python manage.py makemigrations --name "$msg"
+elif [ "$1" == "migrate" ]
+then
+    exec python manage.py migrate
+elif [ "$1" == "shell" ]
+then
+    exec python manage.py shell_plus
+elif [ "$1" == "bash" ]
+then
+    exec bash
+elif [ "$1" == "pip" ]
+then
+    shift
+    msg="$@"
+    exec python -m pip "${@}"
+elif [ "$1" == "test" ]
+then
+    shift
+    msg="$@"
+    exec python manage.py test onlybeer."${@}"
+elif [ "$1" == "tests" ]
+then
+    shift
+    msg="$@"
+    exec ./test.sh
+elif [ "$RUN_MODE" == "dev" ]
+then
+    pip install ipdb ipython
+    python manage.py migrate
+    echo "Running app dev mode..."
+    gunicorn config.wsgi:application \
+        --name fiat-service \
+        --bind 0.0.0.0:8000 \
+        --log-level=info \
+        --reload \
+        --timeout 0
+else
+    echo "Running fiat-service app..."
+    gunicorn config.wsgi:application \
+        --name fiat-service \
+        --bind 0.0.0.0:8000 \
+        --log-level=error
+fi
+
+echo "Fin entrypoint..."
