@@ -34,15 +34,15 @@ then
     python manage.py migrate
     echo "Running app dev mode..."
     gunicorn config.wsgi:application \
-        --name onlybeer \
+        --name fiat-service \
         --bind 0.0.0.0:8000 \
         --log-level=info \
         --reload \
         --timeout 0
 else
-    echo "Running aoo-service app..."
+    echo "Running fiat-service app..."
     gunicorn config.wsgi:application \
-        --name onlybeer \
+        --name fiat-service \
         --bind 0.0.0.0:8000 \
         --log-level=error
 fi

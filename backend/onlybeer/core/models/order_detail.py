@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from .base_model import BaseModel
@@ -13,10 +14,21 @@ class OrderDetail(BaseModel):
 
     @property
     def total(self):
-        return self.quantity * self.price
+        if self.quantity and self.price:
+            return self.quantity * self.price
+        else:
+            return 0
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name}"
 
     class Meta:
         unique_together = ("order", "product")
+
+    def save(self, *args, **kwargs):
+        self.price = self.product.price
+        self.product.stock -= self.quantity
+        if self.product.stock < 0:
+            raise ValidationError("No hay suficiente stock disponible.")
+        self.product.save()
+        super().save(*args, **kwargs)

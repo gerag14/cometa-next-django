@@ -45,10 +45,11 @@ THIRTH_PART_APPS = [
     "rest_framework",
     "django_filters",
     "django_extensions",
+    "corsheaders",
 ]
 
 ONLYBEER_APPS = [
-    "core",
+    "onlybeer.core",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRTH_PART_APPS + ONLYBEER_APPS
@@ -56,6 +57,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRTH_PART_APPS + ONLYBEER_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -63,7 +65,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "onlybeer.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -81,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "onlybeer.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
