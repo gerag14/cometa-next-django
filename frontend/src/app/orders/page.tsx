@@ -1,16 +1,10 @@
+"use client";
+
 import OrderCard from "../components/orderCard";
+import useOrdersData from "../hooks/useOrdersData";
 
-async function getData() {
-  const res = await fetch("http://127.0.0.1:8000/api/orders/");
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-export default async function Page() {
-  const data = await getData();
+export default function Page() {
+  const { orders, loading, error } = useOrdersData();
 
   return (
     <div className="container mx-auto p-4">
@@ -21,7 +15,7 @@ export default async function Page() {
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {data.map((order) => (
+        {orders.map((order) => (
           <OrderCard key={order.uuid} order={order} />
         ))}
       </div>

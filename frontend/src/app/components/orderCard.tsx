@@ -4,22 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import OrderCardDetail from "./orderCardDetail";
 
-interface OrderCardProps {
-  order: {
-    uuid: string;
-    created_on: string;
-    status: string;
-    total: string;
-    customer_email: string;
-    items: {
-      uuid: string;
-      product_name: string;
-      quantity: number;
-      price: string;
-    }[];
-  };
-}
-
 const OrderCard = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
 
