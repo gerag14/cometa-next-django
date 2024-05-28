@@ -13,7 +13,10 @@ export default async function Page({ params }: { params: { order: string } }) {
 
   return (
     <div>
-      <h1>Order {order_data.uuid}</h1>
+      <h1 className="text-2xl font-bold">Orders</h1>
+      <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+        Create new Order
+      </button>
       <OrderCard order={order_data} />
     </div>
   );
